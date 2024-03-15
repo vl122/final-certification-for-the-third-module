@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %} Блог разработки {% endblock %}
+
+{% block content %} 
+
+<!-- {% if message %}
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+{% endif %}
+
+<form class="text-center"  action ="{% url 'addarticle' %}" method = "post">
+    {% csrf_token %}
+    {% for f in form %}
+    <p><label class = "form-label" for = "{{ f.id_for_label }}"> {{ f.label }} </label> {{ f }}</p>
+    <div class = "form-error"> {{ f.errors }} </div>
+    {% endfor %}
+
+    <button type = "submit"> Опубликовать </button>
+
+</form>
+
+ -->
+
+ {% if request.user.is_authenticated %}
+<section class="position-relative py-4 py-xl-5">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+            <div class="card mb-5">
+                <div class="card-body p-sm-5">
+                    {% if messages %}
+                     {% for message in messages %}
+                     <div class="alert alert-success text-center" role="alert">
+                      {{ message }}
+                     </div>
+                     {% endfor %}
+                    {% endif %}  
+                    <h2 class="text-center mb-4">Напишите свою стать!</h2>
+                    <form  action="{% url 'addarticle' %}" method="post">
+                        {% csrf_token %}
+                        {% for f in form %}
+                        <div class="mb-3"><label for="{{ f.id_for_label }}">{{f.label}}: </label> {{ f }} </div>
+                        <div class="form-error">{{ f.errors }}</div>
+                        {% endfor %}
+                    
+                        <div><button class="btn btn-primary d-block w-100" type="submit" style="background: rgb(144, 219, 64);">Опубликовать </button></div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% else %}	
+<h1> ВЫ НЕ ВОШЛИ В СИСТЕМУ</h1>
+{% endif %}
+
+
+
+
+
+<!-- <form>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Адрес электронной почты</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      <div id="emailHelp" class="form-text">Мы никогда никому не передадим вашу электронную почту.</div>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Пароль</label>
+      <input type="password" class="form-control" id="exampleInputPassword1">
+    </div>
+    <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">Проверить меня</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Отправить</button>
+</form> -->
+
+
+
+
+{% endblock %}
